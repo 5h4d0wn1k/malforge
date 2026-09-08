@@ -235,16 +235,55 @@ def make_pe_fixture() -> bytes:
     return bytes(blob)
 
 
+CLEAN1_C = r"""
+#include <stdio.h>
+#include <stdlib.h>
+/* Genuinely different clean sample: fibonacci + distinct strings. */
+static unsigned long fib(int n){
+    if(n<2) return n;
+    return fib(n-1)+fib(n-2);
+}
+int main(void){
+    printf("fib=%lu unique_clean_word_A_33221\n", fib(12));
+    return 0;
+}
+"""
+
+CLEAN2_C = r"""
+#include <stdio.h>
+#include <string.h>
+/* Second clean sample, disjoint vocabulary. */
+static const char tag[] = "totally_unrelated_clean_B_x9q7";
+int main(void){
+    char buf[64];
+    snprintf(buf, sizeof buf, "tag=%s", tag);
+    for(size_t i=0; buf[i]; i++) buf[i] = (char)(buf[i] | 0x20);
+    printf("%s\n", buf);
+    return 0;
+}
+"""
+
+CLEAN3_C = r"""
+#include <stdio.h>
+#include <math.h>
+/* Third clean sample: numeric-heavy, no shared literal vocabulary. */
+int main(void){
+    double acc = 0.0;
+    for(int i=1;i<1000;i++) acc += 1.0/(i*i);
+    printf("pi2over6=%.9f disjoint_clean_theta_77\n", acc);
+    return 0;
+}
+"""
+
+
 def make_clean_samples_for_yara() -> dict:
-    """Return three structurally-different clean fixtures to test FP."""
-    # simple hello
+    """Return three structurally/lexically distinct clean fixtures for FP."""
     if not (FIXTURES / "clean_sample_1").exists():
-        compile_c(HELLO_C, FIXTURES / "clean_sample_1", ["-O0"])
+        compile_c(CLEAN1_C, FIXTURES / "clean_sample_1", ["-O0"])
     if not (FIXTURES / "clean_sample_2").exists():
-        compile_c(SLEEP_C, FIXTURES / "clean_sample_2", ["-O2"])
+        compile_c(CLEAN2_C, FIXTURES / "clean_sample_2", ["-O2"])
     if not (FIXTURES / "clean_sample_3").exists():
-        compile_c(HELLO_C, FIXTURES / "clean_sample_3", ["-O2", "-pg"]
-                  if False else ["-O2"])
+        compile_c(CLEAN3_C, FIXTURES / "clean_sample_3", ["-O1"])
     return {
         "c1": (FIXTURES / "clean_sample_1").read_bytes(),
         "c2": (FIXTURES / "clean_sample_2").read_bytes(),

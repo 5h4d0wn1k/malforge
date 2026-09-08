@@ -11,7 +11,7 @@ from malforge.parsers import macho as machomod
 from malforge.parsers import rawbytes as raw
 from malforge.parsers import identify
 
-from .fixtures import make_fixtures, make_elf_fixtures, make_pe_fixture
+from tests.fixtures import make_fixtures, make_elf_fixtures, make_pe_fixture
 
 
 class TestRawBytes(unittest.TestCase):

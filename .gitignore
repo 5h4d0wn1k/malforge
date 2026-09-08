@@ -9,3 +9,11 @@ dist/
 *.egg-info/
 .venv/
 .env
+tests/fixtures/*_elf
+tests/fixtures/variant_a
+tests/fixtures/variant_b
+tests/fixtures/clean_sample_*
+tests/fixtures/*.o
+tests/fixtures/*.so
+tests/fixtures/*.exe
+tests/fixtures/*.dll
