@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "malforge"
+version = "1.0.0"
+description = "Production-grade malware-analysis & reverse-engineering workstation"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [{name = "5h4d0wn1k"}]
+keywords = ["malware", "reverse-engineering", "binary-analysis", "yara", "sandbox"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Security",
+]
+dependencies = []
+
+[project.optional-dependencies]
+full = ["lief>=0.13", "capstone>=5.0"]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+malforge = "malforge.cli:main"
+
+[project.entry-points.console_scripts]
+malforge = "malforge.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["malforge*"]
+
+[tool.setuptools.package-data]
+malforge = ["data/*.yar"]
