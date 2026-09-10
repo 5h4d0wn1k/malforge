@@ -1,4 +1,5 @@
 # malforge
+![tests](https://github.com/5h4d0wn1k/malforge/actions/workflows/ci.yml/badge.svg) ![MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 
 Production-grade malware analysis & RE workstation — offline static ELF/PE/Mach-O parsing, PTRACE sandbox, deobfuscation, YARA-gen, binary diff, shellcode encoder, Frida generator.
 
@@ -142,3 +143,6 @@ python3 -m malforge demo
 | Shellcode roundtrip | All 3 encoders pass |
 | Frida syntax valid | Yes |
 | External dependencies | 0 (stdlib only) |
+
+## Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md).
